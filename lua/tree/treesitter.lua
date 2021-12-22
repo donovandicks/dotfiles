@@ -1,27 +1,21 @@
 return function()
   require('nvim-treesitter.configs').setup({
-    ensure_installed = {
-      'c',
-      'cpp',
-      'javascript',
-      'json',
-      'jsonc',
-      'python',
-      'rust',
-      'svelte',
-      'toml',
-      'typescript',
-    },
-    additional_vim_regex_highlighting = false,
+    ensure_installed = "maintained",
+    sync_install = false,
     autopairs = {
       enable = true
     },
     indent = {
-      enable = false
+      enable = true
     },
     highlight = {
       enable = true,
       disable = { 'json' },
+      additional_vim_regex_highlighting = true,
+    },
+    context_commentstring = {
+      enable = true,
+      enabled_autocmd = false,
     },
     playgound = {
       enable = true,

@@ -25,15 +25,19 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdate' }
 Plug 'nvim-treesitter/playground'
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
+
+" Completions
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/nvim-cmp'
 
 " Snippets
 Plug 'rafamadriz/friendly-snippets'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
-
-" UI
-" Plug 'glepnir/dashboard-nvim'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -43,7 +47,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 
 " Formatting
-Plug 'yggdroot/indentline'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'windwp/nvim-autopairs'
 
 " Themes
 Plug 'rktjmp/lush.nvim'
@@ -80,14 +85,16 @@ lua require('tree.treesitter')()
 lua require('fuzzy_finder.telescope')()
 
 
-" ==================COMPE CONFIG====================== "
-set completeopt=menuone,noselect
+" ===============FORMATTING CONFIG==================== "
+lua require('indent')() 
+lua require('pairs')()
+
+
+" ==================COMPLETION CONFIG====================== "
+" set completeopt=menuone,noselect
 lua require('lsp_config.completions')()
 
 
 " ===================SNIP CONFIG====================== "
 lua require('snippets')()
 
-
-" ====================UI CONFIG======================= "
-" lua require('dashboard')()

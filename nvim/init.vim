@@ -16,28 +16,23 @@ call plug#begin('~/AppData/Local/nvim/plugged')
 " Nvim tools, common dependencies
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
-
-" Fuzzy finding
-Plug 'nvim-telescope/telescope.nvim'
+Plug 'mfussenegger/nvim-dap'
 
 " Language Support
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdate' }
-Plug 'nvim-treesitter/playground'
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 Plug 'neovim/nvim-lspconfig'
+Plug 'simrat39/rust-tools.nvim'
 
 " Completions
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/nvim-cmp'
 
-" Snippets
-Plug 'rafamadriz/friendly-snippets'
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
+" Fuzzy finding
+Plug 'nvim-telescope/telescope.nvim'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -56,25 +51,14 @@ Plug 'npxbr/gruvbox.nvim'
 call plug#end()
 
 
-" ===================COLORSCHEME====================== "
-let g:gruvbox_contrast_dark='hard'
-set background=dark
-colorscheme gruvbox
-set colorcolumn=100
-highlight ColorColumn ctermbg=lightgrey
-
-
-" ===================KEYMAPS========================== "
-" Ctrl-[ to exit insert mode from :term emulation
-tnoremap <C-[> <C-\><C-n>
-
-
 " ==================LSP CONFIG======================== "
 lua require('lsp_config.servers')()
+lua require('rust-tools').setup({})
 
 
-" ==================DOGECONFIG======================== "
-let g:doge_mapping = '<space>d' 
+" ==================COMPLETION CONFIG====================== "
+" set completeopt=menuone,noselect
+lua require('lsp_config.completions')()
 
 
 " ===============TREESITTER CONFIG==================== "
@@ -90,11 +74,18 @@ lua require('indent')()
 lua require('pairs')()
 
 
-" ==================COMPLETION CONFIG====================== "
-" set completeopt=menuone,noselect
-lua require('lsp_config.completions')()
+" ===================KEYMAPS========================== "
+" Ctrl-[ to exit insert mode from :term emulation
+tnoremap <C-[> <C-\><C-n>
 
 
-" ===================SNIP CONFIG====================== "
-lua require('snippets')()
+" ==================DOGECONFIG======================== "
+let g:doge_mapping = '<space>d' 
 
+
+" ===================COLORSCHEME====================== "
+let g:gruvbox_contrast_dark='hard'
+set background=dark
+colorscheme gruvbox
+set colorcolumn=100
+highlight ColorColumn ctermbg=lightgrey

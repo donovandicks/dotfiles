@@ -110,6 +110,23 @@ return function()
     }
   }
 
+  lspconfig.rust_analyzer.setup({
+    settings = {
+      ["rust-analyzer"] = {
+        assist = {
+          importGranularity = "module",
+          importPrefix = "by_self",
+        },
+        cargo = {
+          loadOutDirsFromCheck = true
+        },
+        procMacro = {
+          enable = true
+        }
+      }
+    }
+  })
+
   lspconfig.tsserver.setup {
     on_attach = function(client)
       client.resolved_capabilities.document_formatting = false

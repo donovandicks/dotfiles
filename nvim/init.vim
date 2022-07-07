@@ -10,82 +10,60 @@ set smartindent
 set softtabstop=2
 set tabstop=2
 set termguicolors
+set signcolumn=yes
 
-" ===================START PLUGINS==================== "
-call plug#begin('~/AppData/Local/nvim/plugged')
-" Nvim tools, common dependencies
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-lua/popup.nvim'
-Plug 'mfussenegger/nvim-dap'
+" Auto start COQ
+let g:coq_settings = { 'auto_start': 'shut-up' }
 
-" Language Support
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
-Plug 'neovim/nvim-lspconfig'
-Plug 'simrat39/rust-tools.nvim'
-
-" Completions
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-
-" Fuzzy finding
-Plug 'nvim-telescope/telescope.nvim'
-
-" Git
-Plug 'tpope/vim-fugitive'
-
-" Keyboard QOL
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-
-" Formatting
-Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'windwp/nvim-autopairs'
-
-" Themes
-Plug 'rktjmp/lush.nvim'
-Plug 'npxbr/gruvbox.nvim'
-call plug#end()
+" ===================LOAD PLUGINS==================== "
+lua require('plugins')
 
 
 " ==================LSP CONFIG======================== "
-lua require('lsp_config.servers')()
-lua require('rust-tools').setup({})
+lua require('lsp_config.servers')
+"lua require('rust-tools').setup({})
 
 
-" ==================COMPLETION CONFIG====================== "
-" set completeopt=menuone,noselect
-lua require('lsp_config.completions')()
+" ================TESTING CONFIG====================== "
+lua require('testing')
 
 
 " ===============TREESITTER CONFIG==================== "
-lua require('tree.treesitter')()
+lua require('tsitter')
 
 
 " ===============TELESCOPE CONFIG===================== "
-lua require('fuzzy_finder.telescope')()
+lua require('fuzzy_finder.tscope')
 
 
 " ===============FORMATTING CONFIG==================== "
-lua require('indent')() 
-lua require('pairs')()
+lua require('indent')
+lua require('pairs')
+lua require('formatting')
+
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost * FormatWrite
+augroup END
 
 
 " ===================KEYMAPS========================== "
 " Ctrl-[ to exit insert mode from :term emulation
 tnoremap <C-[> <C-\><C-n>
 
+" Formatting Keymaps
+nnoremap <silent> <space>f :Format<CR>
+nnoremap <silent> <space>F :FormatWrite<CR>
 
-" ==================DOGECONFIG======================== "
-let g:doge_mapping = '<space>d' 
+" lua <<EOF
+"   local opts = { noremap=true, silent=true }
+"   vim.keymap.set('n', '<space>t', '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>', opts)
+" EOF
 
 
 " ===================COLORSCHEME====================== "
 let g:gruvbox_contrast_dark='hard'
 set background=dark
 colorscheme gruvbox
-set colorcolumn=100
+autocmd FileType python set colorcolumn=88
 highlight ColorColumn ctermbg=lightgrey

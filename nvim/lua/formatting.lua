@@ -10,6 +10,12 @@ formatter.setup({
     },
     lua = {
       require('formatter.filetypes.lua').stylua,
+    },
+    typescript = {
+      require('formatter.filetypes.typescript').denofmt,
+    },
+    typescriptreact = {
+      require('formatter.filetypes.typescriptreact').denofmt,
     }
   }
 })

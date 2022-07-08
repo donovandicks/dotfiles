@@ -1,5 +1,6 @@
 set nocompatible
-set autoindent
+" set autoindent
+set smartindent
 set expandtab
 set incsearch
 set noswapfile

@@ -1,5 +1,4 @@
 set nocompatible
-" set autoindent
 set smartindent
 set expandtab
 set incsearch
@@ -12,6 +11,7 @@ set softtabstop=2
 set tabstop=2
 set termguicolors
 set signcolumn=yes
+set completeopt=menu,menuone,noselect
 
 " Auto start COQ
 let g:coq_settings = { 'auto_start': 'shut-up' }
@@ -22,7 +22,6 @@ lua require('plugins')
 
 " ==================LSP CONFIG======================== "
 lua require('lsp_config.servers')
-"lua require('rust-tools').setup({})
 
 
 " ================TESTING CONFIG====================== "
@@ -39,7 +38,6 @@ lua require('fuzzy_finder.tscope')
 
 " ===============FORMATTING CONFIG==================== "
 lua require('indent')
-lua require('pairs')
 lua require('formatting')
 
 augroup FormatAutogroup
@@ -67,4 +65,5 @@ let g:gruvbox_contrast_dark='hard'
 set background=dark
 colorscheme gruvbox
 autocmd FileType python set colorcolumn=88
+autocmd FileType markdown set colorcolumn=100
 highlight ColorColumn ctermbg=lightgrey

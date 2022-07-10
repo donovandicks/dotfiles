@@ -9,13 +9,21 @@ end
 
 local lspconfig = load_plugin('lspconfig')
 local coq = load_plugin('coq')
+local npairs = load_plugin('nvim-autopairs')
 
 -- Auto Indent Pairs
+npairs.setup({
+  chars = { "{", "[", "(", "'", '"' },
+  check_comma = true,
+  check_ts = true,
+  ts_config = {
+    lua = { "string", "source" },
+    javascript = { "string", "template_string" },
+  },
+})
+
 local remap = vim.api.nvim_set_keymap
-local npairs = require('nvim-autopairs')
-
 npairs.setup({ map_bs = false, map_cr = false })
-
 vim.g.coq_settings = { keymap = { recommended = false } }
 
 -- these mappings are coq recommended mappings unrelated to nvim-autopairs
